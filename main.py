@@ -3,7 +3,11 @@ import json
 
 def generator_mp5(path_to_file):
     with open(path_to_file) as file:
-        for line in file:
-            print(hashlib.md5(str(line).encode('utf-8')).hexdigest())
+        generator = (line for line in file)
+        text = hashlib.md5(str(generator).encode('utf-8')).hexdigest()
 
-generator_mp5('countries.json')
+
+        yield text
+
+print(generator_mp5('countries.json').__next__())
+print(generator_mp5('countries.json').__next__())
